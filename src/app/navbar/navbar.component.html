@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+    <button mat-button routerLink="/">Home</button>
+    <ng-container *ngIf="user$ | async as user; else notLoggedIn">
+      <button mat-button routerLink="/dashboard">Dashboard</button>
+      <button mat-button (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-template #notLoggedIn>
+      <button mat-button routerLink="/login">Login</button>
+      <button mat-button routerLink="/register">Register</button>
+    </ng-template>
+  </mat-toolbar>
+  

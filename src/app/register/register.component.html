@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-title>Register</mat-card-title>
+    <mat-card-content>
+      <form (submit)="register(email.value, password.value, displayName.value, $event)">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput #email type="email" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput #password type="password" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Display Name</mat-label>
+          <input matInput #displayName type="text" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Register</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  
