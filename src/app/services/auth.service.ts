@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
 import { User } from 'firebase/auth';
+import { Observable } from 'rxjs';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 @Injectable({
@@ -33,6 +33,11 @@ export class AuthService {
     } catch (error) {
       throw error;
     }
+  }
+
+  getUserId(): string | null {
+    const user = this.auth.currentUser;
+    return user ? user.uid : null;
   }
 
   async signOut() {

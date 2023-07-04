@@ -1,0 +1,30 @@
+<form [formGroup]="searchSortForm" (ngSubmit)="searchSort()">
+    <mat-form-field>
+      <input matInput formControlName="search" placeholder="Search by course name">
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-select formControlName="sortBy">
+        <mat-option value="">Sort By</mat-option>
+        <mat-option value="price">Price</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <button mat-raised-button color="primary" type="submit">Apply</button>
+  </form>
+  
+  <a mat-button routerLink="/add-course">Add Course</a>
+
+  <mat-card *ngFor="let course of courses">
+    <mat-card-header>
+      <mat-card-title>{{ course.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ course.description }}</p>
+      <p>Price: {{ course.price }}</p>
+      <p>Domain: {{ course.domain }}</p>
+      <a mat-button routerLink="/courses/{{ course.id }}">View Details</a>
+      <a mat-button color="accent" routerLink="/edit-course/{{ course.id }}">Edit</a>
+    </mat-card-content>
+  </mat-card>
+  

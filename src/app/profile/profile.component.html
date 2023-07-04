@@ -1,1 +1,62 @@
-<p>profile works!</p>
+<mat-card>
+    <mat-card-title>Profile</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="profileForm" (ngSubmit)="saveUserProfileData()">
+        <mat-form-field appearance="outline">
+          <mat-label>Display Name</mat-label>
+          <input matInput formControlName="display_name" placeholder="Enter your display name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="first_name" placeholder="Enter your first name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="last_name" placeholder="Enter your last name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>About</mat-label>
+          <textarea matInput formControlName="bio" rows="5" placeholder="Tell us about yourself"></textarea>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Areas of Interest</mat-label>
+          <input matInput formControlName="areas_of_interest" placeholder="Enter your areas of interest, separated by commas">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>User Type</mat-label>
+          <mat-select formControlName="user_type">
+            <mat-option [value]="true">Student</mat-option>
+            <mat-option [value]="false">Professional</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Experience</mat-label>
+          <input matInput formControlName="experience" placeholder="Enter your experience">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Domain Expertise</mat-label>
+          <input matInput formControlName="domain_expertise" placeholder="Enter your domain expertise">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <input matInput formControlName="role" placeholder="Enter your role">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Profile Picture</mat-label>
+          <input matInput formControlName="profile_picture" placeholder="Enter the URL of your profile picture">
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

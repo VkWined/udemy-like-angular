@@ -2,6 +2,8 @@
     <button mat-button routerLink="/">Home</button>
     <ng-container *ngIf="user$ | async as user; else notLoggedIn">
       <button mat-button routerLink="/dashboard">Dashboard</button>
+      <button mat-button routerLink="/profile">profile</button>
+      <button mat-button routerLink="/courses">courses</button>
       <button mat-button (click)="logout()">Logout</button>
     </ng-container>
     <ng-template #notLoggedIn>

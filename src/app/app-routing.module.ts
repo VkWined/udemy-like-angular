@@ -4,10 +4,21 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './guards/auth.guard.service';
+import { ProfileComponent } from './profile/profile.component';
+import { CoursesComponent } from './courses/courses.component';
+import { AddCourseComponent } from './add-course/add-course.component'; 
+import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { EditCourseComponent } from './edit-course/edit-course.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
+  { path: 'add-course', component: AddCourseComponent, canActivate: [AuthGuard] },
+  { path: 'courses/:id', component: CourseDetailComponent, canActivate: [AuthGuard] },
+  { path: 'edit-course/:id', component: EditCourseComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 @NgModule({
