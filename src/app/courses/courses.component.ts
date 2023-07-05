@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CourseService } from '../services/course.service';
+import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-courses',
@@ -15,6 +18,9 @@ export class CoursesComponent implements OnInit {
   constructor(
     private courseService: CourseService,
     private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private cartService: CartService,
+    private snackBar: MatSnackBar,
     
   ) { }
   ngOnInit(): void {
@@ -45,6 +51,18 @@ export class CoursesComponent implements OnInit {
   
     this.courses = filteredCourses;
   }
+  addToCart(courseId: string): void {
+    let userId = this.authService.getUserId();
+    this.cartService.addCourseToCart(userId!, courseId)
+      .then(() => {
+        this.snackBar.open('Course added to cart', '', { duration: 2000 });
+      })
+      .catch(err => {
+        console.error(err);
+        this.snackBar.open('Error adding course to cart', '', { duration: 2000 });
+      });
+  }
+  
   
   
 }

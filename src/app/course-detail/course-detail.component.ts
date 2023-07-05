@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../services/course.service';
-
+import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
@@ -13,7 +15,10 @@ export class CourseDetailComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private cartService: CartService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -27,5 +32,16 @@ export class CourseDetailComponent implements OnInit {
     } catch (error) {
       console.error('Error getting course: ', error);
     }
+  }
+  addToCart(courseId: string): void {
+    let userId = this.authService.getUserId();
+    this.cartService.addCourseToCart(userId!, courseId)
+      .then(() => {
+        this.snackBar.open('Course added to cart', '', { duration: 2000 });
+      })
+      .catch(err => {
+        console.error(err);
+        this.snackBar.open('Error adding course to cart', '', { duration: 2000 });
+      });
   }
 }

@@ -1,14 +1,14 @@
 <mat-toolbar color="primary">
-    <button mat-button routerLink="/">Home</button>
-    <ng-container *ngIf="user$ | async as user; else notLoggedIn">
-      <button mat-button routerLink="/dashboard">Dashboard</button>
-      <button mat-button routerLink="/profile">profile</button>
-      <button mat-button routerLink="/courses">courses</button>
-      <button mat-button (click)="logout()">Logout</button>
-    </ng-container>
-    <ng-template #notLoggedIn>
-      <button mat-button routerLink="/login">Login</button>
-      <button mat-button routerLink="/register">Register</button>
-    </ng-template>
-  </mat-toolbar>
-  
+  <button mat-button routerLink="/">Home</button>
+  <ng-container *ngIf="user$ | async as user; else notLoggedIn">
+    <button mat-button routerLink="/dashboard">Dashboard</button>
+    <button mat-button routerLink="/profile">profile</button>
+    <button mat-button routerLink="/courses">courses</button>
+    <button mat-button routerLink="/cart">Cart</button> <!-- New Line -->
+    <button mat-button (click)="logout()">Logout</button>
+  </ng-container>
+  <ng-template #notLoggedIn>
+    <button mat-button routerLink="/login">Login</button>
+    <button mat-button routerLink="/register">Register</button>
+  </ng-template>
+</mat-toolbar>

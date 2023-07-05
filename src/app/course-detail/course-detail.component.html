@@ -8,5 +8,6 @@
       <p>Domain: {{ course.domain }}</p>
       <p>Price: {{ course.price }}</p>
       <p>Duration: {{ course.duration }}</p>
+      <button mat-raised-button color="accent" (click)="addToCart(course.id)">Add to Cart</button>
     </mat-card-content>
   </mat-card>

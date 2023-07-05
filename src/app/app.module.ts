@@ -28,6 +28,9 @@ import { CoursesComponent } from './courses/courses.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
+import { RecommendedCoursesComponent } from './recommended-courses/recommended-courses.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
     CoursesComponent,
     AddCourseComponent,
     CourseDetailComponent,
-    EditCourseComponent
+    EditCourseComponent,
+    RecommendedCoursesComponent,
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,

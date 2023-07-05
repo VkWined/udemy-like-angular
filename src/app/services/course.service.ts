@@ -72,6 +72,11 @@ async getRecommendedCourses(userDomain: string): Promise<any[]> {
   const courses = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   return courses;
 }
-
+async getCoursesByDomain(domain: string) {
+  const db = getFirestore();
+  const q = query(collection(db, 'courses'), where('domain', '==', domain));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+}
 }
 

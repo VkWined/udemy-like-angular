@@ -1,0 +1,13 @@
+<h2>Recommended Courses</h2>
+
+<mat-card *ngFor="let course of recommendedCourses | async">
+  <mat-card-header>
+    <mat-card-title>{{ course.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ course.description }}</p>
+    <p>Price: {{ course.price }}</p>
+    <p>Domain: {{ course.domain }}</p>
+    <a mat-button routerLink="/courses/{{ course.id }}">View Details</a>
+  </mat-card-content>
+</mat-card>

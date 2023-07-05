@@ -25,6 +25,7 @@
       <p>Domain: {{ course.domain }}</p>
       <a mat-button routerLink="/courses/{{ course.id }}">View Details</a>
       <a mat-button color="accent" routerLink="/edit-course/{{ course.id }}">Edit</a>
+      <button mat-raised-button color="accent" (click)="addToCart(course.id)">Add to Cart</button>
     </mat-card-content>
   </mat-card>
   
