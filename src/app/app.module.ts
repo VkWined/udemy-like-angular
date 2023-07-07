@@ -19,11 +19,15 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+
+
 
 import { AuthService } from './services/auth.service';
 
 import { ProfileComponent } from './profile/profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CoursesComponent } from './courses/courses.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
@@ -31,6 +35,8 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
 import { RecommendedCoursesComponent } from './recommended-courses/recommended-courses.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { MyCoursesComponent } from './my-courses/my-courses.component';
 
 @NgModule({
   declarations: [
@@ -46,12 +52,15 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     EditCourseComponent,
     RecommendedCoursesComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    OrderListComponent,
+    MyCoursesComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -59,11 +68,13 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     MatInputModule,
     MatSelectModule,
     MatOptionModule,
+    MatCheckboxModule,
+    MatRadioModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

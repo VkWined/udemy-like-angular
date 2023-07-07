@@ -1,0 +1,11 @@
+.owned-courses {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .owned-courses mat-card {
+    flex: 0 1 calc(33.33% - 20px);
+    margin: 10px;
+  }
+  

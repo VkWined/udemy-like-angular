@@ -12,6 +12,8 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
 import { RecommendedCoursesComponent } from './recommended-courses/recommended-courses.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { MyCoursesComponent } from './my-courses/my-courses.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -21,10 +23,11 @@ const routes: Routes = [
   { path: 'add-course', component: AddCourseComponent, canActivate: [AuthGuard] },
   { path: 'courses/:id', component: CourseDetailComponent, canActivate: [AuthGuard] },
   { path: 'edit-course/:id', component: EditCourseComponent, canActivate: [AuthGuard] },
+  { path: 'ownedCourses', component: MyCoursesComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
   { path: 'recommended-courses', component: RecommendedCoursesComponent, canActivate: [AuthGuard] },
-
+  { path: 'orders', component: OrderListComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 @NgModule({

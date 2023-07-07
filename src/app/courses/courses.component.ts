@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CourseService } from '../services/course.service';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
+import { OrderService } from '../services/order.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -21,17 +22,24 @@ export class CoursesComponent implements OnInit {
     private authService: AuthService,
     private cartService: CartService,
     private snackBar: MatSnackBar,
-    
+    private orderService: OrderService,
   ) { }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.searchSortForm = this.formBuilder.group({
       search: [''],
-      sortBy: ['']
+      sortBy: [''],
+      
     });
   
-    this.courseService.getAllCourses().then(courses => {
-      this.courses = courses;
-    });
+    const userId = this.authService.getUserId();
+    if (userId) {
+      const allCourses = await this.courseService.getAllCourses();
+      const ownedCourses = await this.orderService.getCourseById(userId);
+      this.courses = allCourses.filter(course => !ownedCourses.includes(course.id));
+    } else {
+      this.courses = await this.courseService.getAllCourses();
+    }
+    
   }
   searchSort(): void {
     const { search, sortBy } = this.searchSortForm.value;

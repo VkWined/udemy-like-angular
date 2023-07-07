@@ -1,0 +1,15 @@
+<div class="orders">
+    <mat-card *ngFor="let order of orders">
+      <mat-card-header>
+        <mat-card-title>Order ID: {{order.id}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let item of order.courses | keyvalue">
+          <p>Name: {{item.value.name}}</p>
+          <p>Description: {{item.value.description}}</p>
+        </div>
+        <p>Date: {{order.date | date: 'short'}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

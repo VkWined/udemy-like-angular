@@ -5,6 +5,7 @@ import {
   getDocs,
   setDoc,
   getFirestore,
+  getDoc,
   addDoc
 } from 'firebase/firestore';
 
@@ -26,6 +27,12 @@ export class OrderService {
     const orderCollectionRef = collection(this.db, `userdata/${userId}/orders`);
     const orderDoc = await addDoc(orderCollectionRef, orderData);
 
+    // Add the courses to the ownedCourses collection
+    const ownedCoursesCollectionRef = collection(this.db, `userdata/${userId}/ownedCourses`);
+    for (const course of cartItems) {
+      await setDoc(doc(ownedCoursesCollectionRef, course.id), course);
+    }
+
     return orderDoc.id;
   }
 
@@ -33,5 +40,25 @@ export class OrderService {
     const querySnapshot = await getDocs(collection(this.db, `userdata/${userId}/orders`));
     const orders = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return orders;
+  }
+  async getOwnedCourses(userId: string): Promise<any[]> {
+    const querySnapshot = await getDocs(collection(this.db, `userdata/${userId}/ownedCourses`));
+    const ownedCourseIds = querySnapshot.docs.map(doc => doc.id);
+  
+    const ownedCourses = [];
+    for (let courseId of ownedCourseIds) {
+      const course = await this.getCourseById(courseId);
+      ownedCourses.push(course);
+    }
+  
+    return ownedCourses;
+  }
+  async getCourseById(courseId: string): Promise<any> {
+    const docSnap = await getDoc(doc(this.db, 'courses', courseId));
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    } else {
+      throw new Error('No such document!');
+    }
   }
 }

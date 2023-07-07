@@ -1,13 +1,50 @@
 <mat-card *ngIf="course">
-    <mat-card-header>
-      <mat-card-title>{{ course.name }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>{{ course.description }}</p>
-      <p>Author: {{ course.author }}</p>
-      <p>Domain: {{ course.domain }}</p>
-      <p>Price: {{ course.price }}</p>
-      <p>Duration: {{ course.duration }}</p>
-      <button mat-raised-button color="accent" (click)="addToCart(course.id)">Add to Cart</button>
-    </mat-card-content>
-  </mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ course.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ course.description }}</p>
+    <p>Author: {{ course.author }}</p>
+    <p>Domain: {{ course.domain }}</p>
+    <p>Price: {{ course.price }}</p>
+    <p>Duration: {{ course.duration }}</p>
+    <button mat-raised-button color="accent" (click)="addToCart(course.id)" *ngIf="!isOwned(course.id)">Add to Cart</button>
+  </mat-card-content>
+
+
+<!-- Review form -->
+<mat-card *ngIf="isOwned(course.id)">
+  <mat-card-header>
+    <mat-card-title>Leave a Review</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field appearance="fill">
+      <textarea matInput placeholder="Your Review" [(ngModel)]="newReview" required></textarea>
+    </mat-form-field>
+    <br>
+    <p>Rating:</p>
+    <mat-radio-group [(ngModel)]="rating" required>
+      <mat-radio-button *ngFor="let rate of [1, 2, 3, 4, 5]" [value]="rate">{{rate}}</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <mat-checkbox [(ngModel)]="anonymous">Post as anonymous</mat-checkbox>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addReview()">Submit Review</button>
+  </mat-card-actions>
+</mat-card>
+
+
+
+<!-- Reviews -->
+<!-- Reviews -->
+<div *ngIf="course.reviews && course.reviews.length > 0">
+  <h2>Reviews</h2>
+  <div *ngFor="let review of course.reviews">
+    <p>Rating: {{ review.rating }}</p>
+    <p>Review: {{ review.content }}</p>
+    <p *ngIf="!review.anonymous">By: {{ review.userId }}</p>
+    <hr>
+  </div>
+</div>
+

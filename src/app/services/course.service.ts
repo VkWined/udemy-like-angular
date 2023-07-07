@@ -60,11 +60,24 @@ async deleteCourse(id: string): Promise<void> {
 }
 
 // Method to add a review to a course
-async addReviewToCourse(courseId: string, review: any): Promise<string> {
-  const docRef = await addDoc(collection(this.db, `courses/${courseId}/reviews`), review);
+async addReview(courseId: string, review: any, userId: string, anonymous: boolean, rating: number): Promise<string> {
+  const reviewData = { 
+    content: review,
+    userId: userId,
+    anonymous: anonymous,
+    rating: rating
+  };
+  const docRef = await addDoc(collection(this.db, `courses/${courseId}/reviews`), reviewData);
   return docRef.id;
 }
 
+
+
+async getReviews(courseId: string): Promise<any[]> {
+  const querySnapshot = await getDocs(collection(this.db, `courses/${courseId}/reviews`));
+  const reviews = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return reviews;
+}
 // Method to get recommended courses
 async getRecommendedCourses(userDomain: string): Promise<any[]> {
   const q = query(collection(this.db, 'courses'), where('domain', '==', userDomain));

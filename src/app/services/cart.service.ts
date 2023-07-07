@@ -22,15 +22,30 @@ export class CartService {
 
   // Method to add a course to a user's cart
   async addCourseToCart(userId: string, courseId: string): Promise<string> {
+    // Fetch the user's owned courses
+    const ownedCourses = await this.getOwnedCourses(userId);
+  
+    // Check if the course is already owned
+    if (ownedCourses.some(course => course.id === courseId)) {
+      throw new Error('This course is already owned by the user');
+    }
+  
     const cartRef = doc(this.db, 'users', userId, 'cart', courseId);
     const courseRef = doc(this.db, 'courses', courseId);
     const courseDoc = await getDoc(courseRef);
     const courseData = courseDoc.data();
-
+  
     await setDoc(cartRef, courseData);
-
+  
     return cartRef.id;
   }
+  
+  async getOwnedCourses(userId: string): Promise<any[]> {
+    const querySnapshot = await getDocs(collection(this.db, `users/${userId}/ownedCourses`));
+    const courses = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return courses;
+  }
+  
 
   // Method to get all courses in a user's cart
   async getCartCourses(userId: string): Promise<any[]> {
