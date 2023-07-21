@@ -7,7 +7,8 @@
     <button mat-button routerLink="/cart">Cart</button> 
     <button mat-button routerLink="/orders">My Orders</button>
     <button mat-button routerLink="/ownedCourses">My Courses</button>
-    <button mat-button (click)="logout()">Logout</button>
+    <button mat-button routerLink="/user-reviews">My Reviews</button>
+    <button mat-button routerLink="/login" (click)="logout()">Logout</button>
   </ng-container>
   <ng-template #notLoggedIn>
     <button mat-button routerLink="/login">Login</button>

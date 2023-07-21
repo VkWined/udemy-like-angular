@@ -40,7 +40,9 @@ async getCourseById(id: string): Promise<any> {
   if (docSnap.exists()) {
     return { id: docSnap.id, ...docSnap.data() };
   } else {
+    
     throw new Error('No such document!');
+    
   }
 }
 
@@ -54,9 +56,10 @@ async updateCourse(id: string, courseData: any): Promise<void> {
 }
 
 // Method to delete a course
-async deleteCourse(id: string): Promise<void> {
+async deleteCourse(id: string): Promise<string> {
   const docRef = doc(this.db, 'courses', id);
-  return await deleteDoc(docRef);
+  await deleteDoc(docRef);
+  return id;
 }
 
 // Method to add a review to a course
@@ -91,5 +94,23 @@ async getCoursesByDomain(domain: string) {
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 }
+
+// Method to get reviews by user id
+async getUserReviews(userId: string): Promise<any[]> {
+  // Get all courses
+  const courses = await this.getAllCourses();
+  
+  const allReviews: any[] = [];
+  // Get reviews for each course
+  for (const course of courses) {
+    const reviews = await this.getReviews(course.id);
+    // Filter reviews for this user and add courseId to review data
+    const userReviews = reviews.filter(review => review.userId === userId).map(review => ({...review, courseId: course.id}));
+    allReviews.push(...userReviews);
+  }
+  
+  return allReviews;
+}
+
 }
 

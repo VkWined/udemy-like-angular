@@ -1,0 +1,10 @@
+<div *ngIf="reviews && reviews.length > 0">
+    <h2>Your Reviews</h2>
+    <div *ngFor="let review of reviews">
+      <p>Course: {{ review.courseId }}</p>
+      <p>Rating: {{ review.rating }}</p>
+      <p>Review: {{ review.content }}</p>
+      <hr>
+    </div>
+  </div>
+  

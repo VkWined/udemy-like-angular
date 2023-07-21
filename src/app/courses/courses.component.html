@@ -1,17 +1,25 @@
 <form [formGroup]="searchSortForm" (ngSubmit)="searchSort()">
-    <mat-form-field>
-      <input matInput formControlName="search" placeholder="Search by course name">
-    </mat-form-field>
-    
-    <mat-form-field>
-      <mat-select formControlName="sortBy">
-        <mat-option value="">Sort By</mat-option>
-        <mat-option value="price">Price</mat-option>
-      </mat-select>
-    </mat-form-field>
-    
-    <button mat-raised-button color="primary" type="submit">Apply</button>
-  </form>
+  <mat-form-field>
+    <input matInput formControlName="search" placeholder="Search by course name">
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-select formControlName="sortBy" placeholder="Sort By">
+      <mat-option value="price">Price</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-select formControlName="sortOrder" placeholder="Sort Order">
+      <mat-option value="lowToHigh">Low to High</mat-option>
+      <mat-option value="highToLow">High to Low</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <button mat-raised-button color="primary" type="submit">Apply</button>
+  <button mat-raised-button color="warn" type="button" (click)="clearFilters()">Clear</button>
+</form>
+
   
   <a mat-button routerLink="/add-course">Add Course</a>
 
@@ -25,6 +33,7 @@
       <p>Domain: {{ course.domain }}</p>
       <a mat-button routerLink="/courses/{{ course.id }}">View Details</a>
       <a mat-button color="accent" routerLink="/edit-course/{{ course.id }}">Edit</a>
+      <a mat-button color="warn" (click)="deleteCourse(course.id)">Delete</a>
       <button mat-raised-button color="accent" (click)="addToCart(course.id)">Add to Cart</button>
     </mat-card-content>
   </mat-card>

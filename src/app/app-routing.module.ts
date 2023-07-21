@@ -14,6 +14,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { MyCoursesComponent } from './my-courses/my-courses.component';
+import { UserReviewsComponent } from './user-reviews/user-reviews.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -28,6 +30,8 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
   { path: 'recommended-courses', component: RecommendedCoursesComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: OrderListComponent, canActivate: [AuthGuard] },
+  { path: 'user-reviews', component: UserReviewsComponent, canActivate: [AuthGuard] },
+
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 @NgModule({

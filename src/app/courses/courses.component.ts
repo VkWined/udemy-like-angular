@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CoursesComponent implements OnInit {
   courses: any[] = [];
   searchSortForm!: FormGroup;
-
+  originalCourses: any[] = []; // To keep a copy of all courses before sorting/filtering
 
   constructor(
     private courseService: CourseService,
@@ -24,40 +24,56 @@ export class CoursesComponent implements OnInit {
     private snackBar: MatSnackBar,
     private orderService: OrderService,
   ) { }
+
   async ngOnInit(): Promise<void> {
     this.searchSortForm = this.formBuilder.group({
       search: [''],
       sortBy: [''],
-      
+      sortOrder: [''],
     });
-  
+
     const userId = this.authService.getUserId();
     if (userId) {
       const allCourses = await this.courseService.getAllCourses();
-      const ownedCourses = await this.orderService.getCourseById(userId);
+      const ownedCourses = await this.orderService.getOwnedCourses(userId);
       this.courses = allCourses.filter(course => !ownedCourses.includes(course.id));
+      this.originalCourses = this.courses.slice(); // Create a copy for filtering
     } else {
       this.courses = await this.courseService.getAllCourses();
+      this.originalCourses = this.courses.slice(); // Create a copy for filtering
     }
-    
   }
+
   searchSort(): void {
-    const { search, sortBy } = this.searchSortForm.value;
-  
+    const { search, sortBy, sortOrder } = this.searchSortForm.value;
+
     // Filter courses by name
-    let filteredCourses = this.courses;
+    let filteredCourses = this.originalCourses;
     if (search) {
-      filteredCourses = this.courses.filter(course =>
+      filteredCourses = this.originalCourses.filter(course =>
         course.name.toLowerCase().includes(search.toLowerCase())
       );
     }
-  
+
     // Sort courses by price
     if (sortBy === 'price') {
-      filteredCourses.sort((a, b) => a.price - b.price);
+      filteredCourses.sort((a, b) => {
+        if (sortOrder === 'lowToHigh') {
+          return a.price - b.price;
+        } else if (sortOrder === 'highToLow') {
+          return b.price - a.price;
+        } else {
+          return 0;
+        }
+      });
     }
-  
+
     this.courses = filteredCourses;
+  }
+
+  clearFilters(): void {
+    this.searchSortForm.reset();
+    this.courses = this.originalCourses.slice(); // Reset courses to original state
   }
   addToCart(courseId: string): void {
     let userId = this.authService.getUserId();
@@ -68,6 +84,17 @@ export class CoursesComponent implements OnInit {
       .catch(err => {
         console.error(err);
         this.snackBar.open('Error adding course to cart', '', { duration: 2000 });
+      });
+  }
+  deleteCourse(courseId: string): void {
+    this.courseService.deleteCourse(courseId)
+      .then((deletedCourseId) => {
+        this.courses = this.courses.filter(course => course.id !== deletedCourseId);
+        this.snackBar.open('Course deleted successfully', '', { duration: 2000 });
+      })
+      .catch(err => {
+        console.error(err);
+        this.snackBar.open('Error deleting course', '', { duration: 2000 });
       });
   }
   

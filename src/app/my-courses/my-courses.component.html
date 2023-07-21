@@ -1,4 +1,5 @@
 <div class="owned-courses">
+  <ng-container *ngIf="ownedCourses.length > 0; else noItems">
     <mat-card *ngFor="let course of ownedCourses">
       <mat-card-header>
         <mat-card-title>{{ course.name }}</mat-card-title>
@@ -9,5 +10,12 @@
         <a mat-button routerLink="/courses/{{ course.id }}">View Details</a>
       </mat-card-content>
     </mat-card>
+  </ng-container>
+  <ng-template #noItems>
+    <div>
+      <p>You don't own any courses.</p>
+      <a mat-raised-button color="primary" routerLink="/courses">Go to courses</a>
+    </div>
+  </ng-template>
   </div>
   

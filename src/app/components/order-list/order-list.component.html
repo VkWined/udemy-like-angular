@@ -1,4 +1,5 @@
 <div class="orders">
+  <ng-container *ngIf="orders.length > 0; else noItems">
     <mat-card *ngFor="let order of orders">
       <mat-card-header>
         <mat-card-title>Order ID: {{order.id}}</mat-card-title>
@@ -11,5 +12,12 @@
         <p>Date: {{order.date | date: 'short'}}</p>
       </mat-card-content>
     </mat-card>
+    </ng-container>
+    <ng-template #noItems>
+      <div>
+        <p>You have no orders yet.</p>
+        <a mat-raised-button color="primary" routerLink="/courses">Go to courses</a>
+      </div>
+    </ng-template>
   </div>
   

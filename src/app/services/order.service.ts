@@ -48,17 +48,20 @@ export class OrderService {
     const ownedCourses = [];
     for (let courseId of ownedCourseIds) {
       const course = await this.getCourseById(courseId);
-      ownedCourses.push(course);
+      if (course) {
+        ownedCourses.push(course);
+      }
     }
   
     return ownedCourses;
   }
+  
   async getCourseById(courseId: string): Promise<any> {
     const docSnap = await getDoc(doc(this.db, 'courses', courseId));
     if (docSnap.exists()) {
       return { id: docSnap.id, ...docSnap.data() };
     } else {
-      throw new Error('No such document!');
+      return null;
     }
   }
 }
